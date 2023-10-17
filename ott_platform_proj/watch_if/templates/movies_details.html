@@ -1,0 +1,156 @@
+{% block title %}  {% endblock %}
+
+{% block style %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-image: url('/path/to/your-background-image.jpg'); /* Replace with your background image URL */
+        background-size: cover;
+        background-position: center;
+        background: black;
+        background-blur: 5px; /* Adjust the blur amount */
+        font-family: Arial, sans-serif; /* Choose an appropriate font */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Place content at the top and bottom */
+        min-height: 100vh; /* Ensure the container takes up the full viewport height */
+    }
+
+    .container {
+        display: flex;
+        background: rgba(0, 0, 0, 0.7); /* Semi-transparent dark black background */
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        color: #fff; /* Text color is white for visibility */
+        flex: 1; /* Take up all available vertical space */
+        position: relative;
+    }
+
+    .container img {
+        max-width: 70%; /* Increase the image size as needed */
+        object-fit: cover; /* Preserve the aspect ratio */
+    }
+
+    .movie-details {
+        flex: 1; /* Take up remaining space */
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Align text to the left */
+        padding: 20px;
+        justify-content: space-between;
+    }
+
+    .movie-info {
+        font-size: 20px; /* Increased font size */
+        margin-bottom: 15px; /* More spacing between text */
+        color: #dddddd; /* Slightly lighter text color */
+        text-shadow: 2px 2px 4px #000; /* Add text shadow */
+        line-height: 1.5; /* Improved line spacing */
+    }
+
+    .movie-info strong {
+        font-weight: bold;
+    }
+
+    .genre-description,
+    .language-duration-uploaded {
+        text-align: left; /* Align content to the left */
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+        padding: 10px;
+    }
+
+    .buttons a {
+        margin-right: 10px;
+        text-decoration: none;
+    }
+
+    .buttons button {
+        padding: 10px 20px;
+        font-size: 18px; /* Larger button text */
+        background-color: #800080; /* Dark purple */
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-shadow: 2px 2px 4px #400040; /* Add text shadow to buttons */
+    }
+
+    .buttons button:hover {
+        background-color: #6a006a; /* Darker purple on hover */
+    }
+
+    .back-button {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 10px 20px;
+        font-size: 18px; /* Larger button text */
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        text-shadow: 2px 2px 4px #999999; /* Add text shadow to the back button */
+    }
+
+    .back-button:hover {
+        background-color: #ccc;
+    }
+
+    .video-container {
+        position: absolute;
+        top: 100%; /* Place the video below the container */
+        width: 100%;
+    }
+</style>
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <button class="back-button" onclick="goBack()">&#8592; Back</button>
+
+    <img src="{{ url }}/media/{{ movies.image }}" alt="{{ movies.name }}">
+
+    <div class="movie-details">
+        <h1>{{ movie.title }}</h1>
+        <div class="genre-description">
+            <p class="movie-info">Title: {{ movies.title }}</p>
+            <p class="movie-info">Genre: {{ movies.subcategory }}</p>
+            <p class="movie-info">Description: {{ movies.description }}</p>
+        </div>
+        <div class="language-duration-uploaded">
+            <p class="movie-info">Language:{{ movies.language }}</p>
+            <p class="movie-info">Duration:{{ movies.duration }} minutes</p>
+            <p class="movie-info">Uploaded by: {{ movies.content_creator }}</p>
+        </div>
+        {% if movies.content_creator == request.user %}
+            <div class="buttons">
+                <div>
+                    <a href="{% url 'home_path' %}edit_content_movies/{{movies.id}}"><button class="btn btn-secondary">Modify</button></a>
+                </div>
+                <div>
+                    <a href="{% url 'home_path' %}delete_movies/{{movies.id}}"><button class="btn btn-secondary">Delete</button></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="video-container">
+        <iframe src="{{ movies.video_url }}" frameborder="0" allowfullscreen style="width: 100%; height: 700px;"></iframe>
+
+    </div>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% block title %} Kids Content Detail {% endblock %}
+
+{% block style %}
+<style>
+    .container {
+        margin-top: 50px;
+        max-width: 600px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .kids-content-info {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .kids-content-info strong {
+        font-weight: bold;
+    }
+
+    .back-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #e0e0e0;
+        color: #333;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+        background-color: #ccc;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>{{ kids_content.title }}</h1>
+    <p class="kids-content-info">Genre: <strong>{{ kids_content.subcategory }}</strong></p>
+    <img src="{{ url }}/media/{{ kids_content.image }}" class="card-img-top" alt="{{ kids_content.name }}">
+    <p class="kids-content-info">Description: {{ kids_content.description }}</p>
+    <p class="kids-content-info">Duration: {{ kids_content.duration }} minutes </p>
+    <p class="kids-content-info">Language: {{ kids_content.language }}</p>
+    <p class="kids-content-info">Uploaded by: {{ kids_content.content_creator }}</p>
+    <a href="{{ kids_content.video_url }}" target="_blank">Watch</a>
+
+    {% if kids_content.content_creator == request.user %}
+    <a href="{% url 'edit_content_kids' kids_content.id %}">
+        <button class="btn btn-secondary back-button">Modify</button>
+    </a>
+    <a href="{% url 'delete_kids' kids_content.id %}">
+        <button class="btn btn-secondary back-button">Delete</button>
+    </a>
+    {% endif %}
+    <button class="btn btn-secondary back-button" onclick="goBack()">Back</button>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

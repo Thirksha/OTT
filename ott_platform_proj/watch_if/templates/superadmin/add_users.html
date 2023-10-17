@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body {
+            background-color: black;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            max-width: 500px;
+            height: 60%;
+            text-align: left;
+            position: relative;
+        }
+
+        .container h3 {
+            color: #333;
+        }
+
+        .container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Style for the back button */
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back button at the top right side of the page -->
+    <button class="back-button" onclick="window.history.back()">Back</button>
+
+    <div class="container">
+        <h3>Add New Users</h3>
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+            {% csrf_token %}
+            {{ add_user_form.as_p }}
+            <input type="submit" value="Save" class="btn btn-success">
+        </form>
+    </div>
+</body>
+</html>

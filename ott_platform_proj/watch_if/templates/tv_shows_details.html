@@ -1,0 +1,69 @@
+
+
+{% extends 'base.html' %}
+
+{% block title %} TV Shows Detail {% endblock %}
+
+{% block style %}
+
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container mt-3">
+    <div class="embed-responsive embed-responsive-16by9">
+       <img src="{{ tv_show.image.url }}" class="d-block w-100" alt="Slide 2 Image" style="width: 826px; height: 600px;">
+    </div>
+
+    <div class="series-details">
+        <h3 class="series-heading">{{ tv_show.title }}</h3>
+        <p>{{ tv_show.description }}</p>
+        <p><span class="series-heading">Language:</span> {{ tv_show.language }}</p>
+        <p><span class="series-heading">Duration:</span> {{ tv_show.duration }} minutes</p>
+        <p><span class="series-heading">Category:</span> {{ tv_show.category.name }}</p>
+        <p><span class="series-heading">Genre:</span> {{ tv_show.subcategory.name }}</p>
+        <p><span class="series-heading">Season Number:</span> {{ seasons.season_number }}</p>
+    </div>
+
+
+
+    {% if user.is_authenticated %}
+        {% if user.groups.first.name == 'creator' %}
+
+            <a href="{% url 'add_episode' tv_show.id seasons.id%}">
+                <button type="button" class="btn" style="background:blueviolet" >Add Episodes</button>
+            </a>
+        {% endif %}
+    {% endif %}
+
+    <div class="container">
+        <h4 class="series-heading">Episodes</h4>
+        {% if episodes %}
+            {% for episode in episodes %}
+            <div class="series-card">
+                <iframe class="episode-video" width="560" height="315" src="{{ episode.video_url }}" frameborder="0" allowfullscreen></iframe>
+                <h4>Episode: {{ episode.episode_number }}</h4>
+                <h3 class="series-heading">{{ episode.title }}</h3>
+                <p>{{ episode.description }}</p>
+                <a href="{{ episode.video_url }}" target="_blank">
+                    <button type="button" class="btn btn-light">Watch Now</button>
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-danger">No episodes available for this TV show.</p>
+        {% endif %}
+    </div>
+    <br>
+    <a href="{% url 'tv_shows' %}">
+        <button type="button" class="btn btn">Go Back</button>
+    </a>
+</div>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+{% endblock %}

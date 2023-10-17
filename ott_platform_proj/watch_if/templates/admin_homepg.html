@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User List for Group: {{ group_name }}</title>
+    <style>
+     body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            position: relative;
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background-color: blueviolet; /* Purple background color */
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Add a smooth transition effect */
+        }
+
+        .back-button:hover {
+            background-color: blueviolet; /* Darker purple on hover */
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+            margin-bottom: 20px; /* Add some space below the heading */
+            color: white; /* Set heading color to white */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: black; /* Set table background color to black */
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        th {
+            background-color: #333; /* Dark gray for header background */
+            text-align:center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #222; /* Slightly lighter dark gray for even rows */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #111; /* Even darker gray for odd rows */
+        }
+
+        .allowed-button {
+            text-decoration: none;
+            color: white;
+            background-color: blueviolet; /* Purple background color */
+            padding: 8px 16px; /* Adjust padding as needed */
+            border-radius: 5px;
+            transition: background-color 0.3s ease; /* Add a smooth transition effect */
+            display: inline-block; /* Make the button behave like an inline element */
+            text-align: center; /* Center the text within the button */
+        }
+
+        .allowed-button:hover {
+            background-color: #6a0dad; /* Darker purple on hover */
+            text-decoration: none;
+        }
+        body {
+            background-image: url('https://img.freepik.com/free-psd/3d-rendering-futuristic-metaverse-sales-podium_23-2150277188.jpg');
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+
+        }
+        h1{
+            font-size: 3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header" style="background-color: black;">
+    <a href="{% url 'admin' %}" class="back-button">Back</a>
+    <a href="{% url 'home_path' %}" class="back-button">Home</a>
+    <h1>User List for Content Creator</h1>
+</div><br><br>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>First Name</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.first_name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.is_active }}</td>
+
+                    <td>
+                           {% if not user.is_superuser and user != request.user %}
+                        <a href="{% url 'toggle_user_status' user.id %}" class="allowed-button">Allowed</a>
+                    {% else %}
+                        <span class="badge badge-secondary">Not Allowed</span>
+                    {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

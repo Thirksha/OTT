@@ -1,0 +1,43 @@
+
+{% extends 'base.html' %}
+<style>
+    .movie-card .movie-image:hover {
+        /* Add your hover styles for the image here */
+        transform: scale(1.1); /* Example: Scale the image by 110% on hover */
+        transition: transform 0.3s ease; /* Add a smooth transition effect */
+    }
+</style>
+{% block title %}Movies by Subcategory{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="my-4 text-white">Movies</h1>
+    {% for subcategory_name, movies_list in movies_by_subcategory.items %}
+    <div class="card mb-3 movie card" style="background-color: rgba(0,0,0,0.7); color: white;">
+        <div class="card-header" style="background-color:black">
+            <h2 style="color: white">{{ subcategory_name }}</h2>
+        </div>
+        <div class="card-body" style="background-color:black">
+            <div class="row g-0">
+                {% for movie in movies_list %}
+                <div class="col-md-2">
+                    <div class="movie-card-inner">
+                        <img src="{{ movie.image.url }}" class="img-fluid rounded-start movie-image" alt="{{ movie.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ movie.title }}</h5>
+<!--                        <p class="card-text">{{ movie.description }}</p>-->
+<!--                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+                            <a href="#" class="btn btn-primary">View</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

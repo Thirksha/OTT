@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %} Edit Movies {% endblock %}
+
+{% block style %}
+<style>
+    .registration-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        background-color: black;
+        color: white;
+    }
+
+    .registration-container h3 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .registration-container .form-group {
+        margin-bottom: 20px;
+    }
+
+    .registration-container .form-control {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .registration-container .btn-primary {
+        width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        background-color: #6f42c1; /* Blue color */
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .registration-container .btn-primary:hover {
+        background-color: #5a3e99; /* Darker shade of blue on hover */
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-3 registration-container">
+    <h3>Edit Movies</h3>
+    <form action="" method="post" enctype="multipart/form-data" novalidate>
+        {% csrf_token %}
+        {{ edit_post_form.as_p }}
+        <input type="submit" value="Update Post" class="btn btn-primary">
+    </form>
+</div>
+{% endblock %}

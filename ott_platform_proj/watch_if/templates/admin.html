@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+        }
+
+        .header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .module {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .module h2 {
+            color: #333;
+        }
+
+        /* Style the module links */
+        .module a {
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+        }
+
+        /* Style the module links on hover */
+        .module a:hover {
+            text-decoration: underline;
+        }
+
+        /* Style the module container */
+.module {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease; /* Add a smooth transition effect */
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    background-color: #800080; /* Purple background color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.back-button:hover {
+    background-color: #6a0dad; /* Darker purple on hover */
+    text-decoration: none;
+}
+
+
+
+/* Style the module container on hover */
+.module:hover {
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2); /* Add a shadow effect on hover */
+    cursor: pointer; /* Change the cursor to indicate interactivity */
+}
+
+/* Style the module headings */
+.module h2 {
+    color: #333;
+}
+/* Style the module links as buttons */
+.module a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: white;
+    background-color: #800080; /* Purple background color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+/* Style the module links as buttons on hover */
+.module a:hover {
+
+background-color: blueviolet; /* Darker purple on hover */
+    text-decoration: none;
+}
+.module {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: white;
+            text-align: center;
+            box-shadow: 0 2px 5px black;
+            transition: transform 0.3s;
+            cursor: pointer;
+
+        }
+
+        .module:hover {
+            transform: scale(1.05);
+        }
+        body {
+            background-image: url('https://img.freepik.com/free-psd/3d-rendering-futuristic-metaverse-sales-podium_23-2150277188.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+
+        }
+        h1{
+            font-size: 3em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header"style=background-color:black;>
+    <a href="{% url 'home_path' %}" class="back-button">Home</a>
+    <h1>Welcome Admin</h1>
+</div>
+
+    <div class="container">
+
+        <div class="module">
+            <h2>Content Creator Management</h2>
+            <p>Manage content creators and their accounts.</p>
+            <a href="{% url 'register' %}">Sign up as content creators</a>
+            <a href="{% url 'user_list' %}">Go to Content Creator Management</a>
+        </div>
+    </div>
+</body>
+</html>

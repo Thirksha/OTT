@@ -1,0 +1,623 @@
+<style>
+
+/* Rest of your CSS styles */
+
+/* Define a custom class for the search button */
+.search-button {
+    background-color: purple; /* Set the background color to purple */
+    border-color: purple; /* Set the border color to purple */
+}
+
+.search-button:hover {
+    background-color: #d8b9ff; /* Change button color to light purple on hover */
+    border-color: #d8b9ff; /* Change border color to light purple on hover */
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.container-fluid {
+    padding: 0;
+}
+
+.navbar-toggler-icon {
+    background-color: #fff; /* Customize the toggler icon color */
+}
+
+
+</style>
+<nav class="navbar bg-dark navbar-expand-lg">
+  <div class="container justify-content-between">
+      <img class = "logo" src="https://cdn-icons-png.flaticon.com/128/9350/9350100.png?ga=GA1.1.1100674163.1692698765&track=ais" style="width: 50px; height: 45px;">
+      <a class="text-light navbar-brand" href="{% url 'watchif' %}">WatchIf</a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+
+
+        {% if not user.is_authenticated %}
+        <li class="nav-item">
+          <a  href="{% url 'home_path' %}" class="text-light nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a  href="{% url 'register_subscriber' %}" class="text-light nav-link" href="#">Sign Up</a>
+        </li>
+           <li class="nav-item">
+          <a  href="{% url 'login' %}" class="text-light nav-link" href="#">Login</a>
+        </li>
+          {% endif %}
+
+        {% if request.user.is_authenticated %}
+
+        <li class="nav-item">
+          <a  href="{% url 'home_path' %}" class="text-light nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a  href="#" class="text-light nav-link" href="#">Welcome  {{ request.user.username}}</a>
+        </li>
+
+
+
+
+          {% if user.groups.all.0.name == 'admin' %}
+         <li class="nav-item">
+          <a  href="{% url 'admin' %}" class="text-light nav-link" href="#">Admin Management</a>
+        </li>
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'movies' %}">Movies</a></li>
+                <li><a class="dropdown-item" href="{% url 'tv_shows' %}">TV Shows</a></li>
+                <li><a class="dropdown-item" href="{% url 'kids_content' %}">Kids</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="text-light nav-link"  href="#" >Logout</a>
+        </li>
+
+        {% endif %}
+
+          {% if user.groups.all.0.name == 'creator' %}
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Add Contents
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'add_content' %}">Add Movies</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_series'  %}">Add TV Shows</a></li>
+                <li><a class="dropdown-item" href="{% url 'add_content_kids' %}">Add Kids</a></li>
+            </ul>
+        </li>
+
+
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'movies' %}">Movies</a></li>
+                <li><a class="dropdown-item" href="{% url 'tv_shows' %}">TV Shows</a></li>
+                <li><a class="dropdown-item" href="{% url 'kids_content' %}">Kids</a></li>
+            </ul>
+        </li>
+             <li class="nav-item">
+          <a  href="{% url 'password_change' %}" class=" text-light nav-link" href="#">change password</a>
+        </li>
+           <li class="nav-item">
+          <a  href="{% url 'logout' %}" class=" text-light nav-link" href="#">logout</a>
+        </li>
+
+        {% endif %}
+          {% if user.groups.all.0.name == 'subscriber' %}
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categories
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="{% url 'movies' %}">Movies</a></li>
+                <li><a class="dropdown-item" href="{% url 'tv_shows' %}">TV Shows</a></li>
+                <li><a class="dropdown-item" href="{% url 'kids_content' %}">Kids</a></li>
+            </ul>
+        </li>
+          <li class="nav-item">
+          <a  href="{% url 'password_change' %}" class=" text-light nav-link" href="#">change password</a>
+        </li>
+           <li class="nav-item">
+          <a  href="{% url 'logout' %}" class=" text-light nav-link" href="#">logout</a>
+        </li>
+
+
+            {% endif %}
+        <form class="d-flex" action="" role="search">
+           <input name="searchpost" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+           <button class="text-light btn btn-success search-button" type="submit">Search</button>
+        </form>
+
+
+
+          {% endif %}
+
+
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Title</title>-->
+<!--</head>-->
+<!--<style>-->
+
+
+
+<!--html, body {-->
+<!--  width: 100vw;-->
+<!--  min-height: 100vh;-->
+<!--  margin: 0;-->
+<!--  padding: 0;-->
+<!--  background-color: var(&#45;&#45;primary);-->
+<!--  color: var(&#45;&#45;light);-->
+<!--  font-family: Arial, Helvetica, sans-serif;-->
+<!--  box-sizing: border-box;-->
+<!--  line-height: 1.4;-->
+
+<!--}-->
+
+<!--img {-->
+<!--  max-width: 100%;-->
+<!--}-->
+
+<!--h1 {-->
+<!--  padding-top: 60px;-->
+<!--}-->
+
+<!--.wrapper {-->
+<!--  margin: 0;-->
+<!--  padding: 0;-->
+<!--}-->
+
+<!--/* HEADER */-->
+<!--header {-->
+<!--  padding: 20px 20px 0 20px;-->
+<!--  position: fixed;-->
+<!--  top: 0;-->
+<!--  display: grid;-->
+<!--  grid-gap:5px;-->
+<!--  grid-template-columns: 1fr 4fr 1fr;-->
+<!--  grid-template-areas:-->
+<!--   "nt mn mn sb . . . ";-->
+<!--  background-color: var(&#45;&#45;primary);-->
+<!--  width: 100%;-->
+<!--  margin-bottom: 0px;-->
+<!--}-->
+
+<!--.Watchlogo {-->
+<!--  grid-area: nt;-->
+<!--  object-fit: cover;-->
+<!--  width: 100px;-->
+<!--  max-height: 100%;-->
+
+<!--  padding-left: 30px;-->
+<!--  padding-top: 0px;-->
+<!--}-->
+
+<!--.Watchlogo img {-->
+<!--  height: 100px;-->
+<!--  width: 100px;-->
+<!--  margin-top: 0;-->
+<!--}-->
+
+<!--#logo {-->
+<!--  color: #E50914;-->
+<!--  margin: 0;-->
+<!--  padding: 0;-->
+<!--}-->
+
+
+<!--.main-nav {-->
+<!--  grid-area: mn;-->
+<!--  padding: 0 30px 0 20px;-->
+<!--}-->
+
+<!--.main-nav a {-->
+<!--  color: var(&#45;&#45;light);-->
+<!--  text-decoration: none;-->
+<!--  margin: 5px;-->
+<!--}-->
+
+<!--.main-nav a:hover {-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--}-->
+
+<!--/* Add this CSS code for the search form */-->
+<!--.search-form {-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--    margin-right: 20px; /* Add margin to separate search bar from other elements */-->
+<!--}-->
+
+<!--.search-form input[type="search"] {-->
+<!--    margin-right: 10px; /* Add spacing between search input and button */-->
+<!--}-->
+
+<!--/* Adjust main navigation alignment */-->
+<!--.main-nav {-->
+<!--    display: flex;-->
+<!--    align-items: center;-->
+<!--}-->
+
+
+
+
+<!--.sub-nav {-->
+<!--  grid-area: sb;-->
+<!--  padding: 0 40px 0 40px;-->
+<!--}-->
+
+<!--.sub-nav a {-->
+<!--  color: var(&#45;&#45;light);-->
+<!--  text-decoration: none;-->
+<!--  margin: 5px;-->
+<!--}-->
+
+<!--.sub-nav a:hover {-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--}-->
+<!--#mySidenav a {-->
+<!--  position: absolute;-->
+<!--  left: -80px;-->
+<!--  transition: 0.3s;-->
+<!--  padding: 15px;-->
+<!--  width: 100px;-->
+<!--  text-decoration: none;-->
+<!--  font-size: 20px;-->
+<!--  color: white;-->
+<!--  border-radius: 0 5px 5px 0;-->
+<!--  margin-top :150px;-->
+<!--}-->
+
+<!--#mySidenav a:hover {-->
+<!--  left: 0;-->
+<!--  width: 200px;-->
+<!--  padding: 12px;-->
+<!--}-->
+
+<!--#about {-->
+
+<!--  top: 30px;-->
+<!--    width: 700px;-->
+<!--    height: 50px;-->
+<!--    margin-left: 10px-->
+<!--}-->
+
+<!--#space {-->
+
+<!--    top: 150px;-->
+<!--    width: 700px;-->
+<!--    height: 50px;-->
+<!--    margin-left: 10px;-->
+<!--}-->
+
+<!--#find {-->
+<!--  top: 280px;-->
+<!--    width: 700px;-->
+<!--    height: 50px;-->
+<!--    margin-left: 10px-->
+<!--}-->
+
+
+<!--.sidenav a:hover {-->
+<!--            left: 0px;-->
+<!--            opacity: 1;-->
+<!--            background-color: rgb(142, 12, 168);-->
+
+<!--}-->
+<!--.sidenav a {-->
+<!--            background-color: rgb(172, 22, 177);-->
+<!--            position: absolute;-->
+<!--            font-size: 22px;-->
+<!--            text-decoration: none;-->
+<!--            Color: white;-->
+<!--            padding: 30px;-->
+<!--            border-radius: 0px 25px 25px 0px;-->
+<!--            left: -190px;-->
+<!--            transition: 0.5s;-->
+<!--            opacity: 0.5;-->
+<!--            margin-top: 150px;-->
+<!--            width: 700px;-->
+
+<!--}-->
+
+<!--/* MAIN CONTIANER */-->
+<!--.main-container {-->
+<!--  padding: 50px;-->
+<!--  margin-left: 20px;-->
+<!--}-->
+
+<!--.box {-->
+<!--  display: grid;-->
+<!--  grid-gap: 20px;-->
+<!--  grid-template-columns: repeat(6, minmax(100px, 1fr));-->
+<!--}-->
+
+<!--.box a {-->
+<!--  transition: transform .3s;-->
+<!--}-->
+
+<!--.box a:hover {-->
+<!--  transition: transform .3s;-->
+<!--  -ms-transform: scale(1.4);-->
+<!--  -webkit-transform: scale(1.4);-->
+<!--  transform: scale(1.4);-->
+<!--}-->
+
+<!--.box img {-->
+<!--  border-radius: 2px;-->
+<!--}-->
+
+<!--/* LINKS */-->
+<!--.link {-->
+<!--  padding: 50px;-->
+<!--}-->
+
+<!--.sub-links ul {-->
+<!--  list-style: none;-->
+<!--  padding: 0;-->
+<!--  display: grid;-->
+<!--  grid-gap: 20px;-->
+<!--  grid-template-columns: repeat(4, 1fr);-->
+<!--}-->
+
+<!--.sub-links a {-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--  text-decoration: none;-->
+<!--}-->
+
+<!--.sub-links a:hover {-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--  text-decoration: underline;-->
+<!--}-->
+
+<!--.logos a{-->
+<!--  padding: 10px;-->
+<!--}-->
+
+<!--.logo {-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--}-->
+
+
+<!--/* FOOTER */-->
+<!--footer {-->
+<!--  padding: 20px;-->
+<!--  text-align: center;-->
+<!--  color: var(&#45;&#45;dark);-->
+<!--  margin: 10px;-->
+<!--}-->
+
+<!--/* MEDIA QUERIES */-->
+
+<!--@media(max-width: 900px) {-->
+
+<!--  header {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(2, 1fr);-->
+<!--    grid-template-areas:-->
+<!--    "nt nt nt  .  .  . sb . . . "-->
+<!--    "mn mn mn mn mn mn  mn mn mn mn";-->
+<!--  }-->
+
+<!--  .box {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(4, minmax(100px, 1fr));-->
+<!--  }-->
+
+<!--}-->
+
+<!--@media(max-width: 700px) {-->
+
+<!--  header {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(2, 1fr);-->
+<!--    grid-template-areas:-->
+<!--    "nt nt nt  .  .  . sb . . . "-->
+<!--    "mn mn mn mn mn mn  mn mn mn mn";-->
+<!--  }-->
+
+<!--  .box {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(3, minmax(100px, 1fr));-->
+<!--  }-->
+<!-- .dropdown-menu a.dropdown-item {-->
+<!--            color: black;-->
+<!--        }-->
+<!--  .sub-links ul {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(3, 1fr);-->
+<!--  }-->
+
+<!--}-->
+
+<!--@media(max-width: 500px) {-->
+
+<!--  .wrapper {-->
+<!--    font-size: 15px;-->
+<!--  }-->
+
+<!--  header {-->
+<!--    margin: 0;-->
+<!--    padding: 20px 0 0 0;-->
+<!--    position: static;-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(1, 1fr);-->
+<!--    grid-template-areas:-->
+<!--    "nt"-->
+<!--    "mn"-->
+<!--    "sb";-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  .Watchlogo {-->
+<!--    width: 20px;-->
+<!--    height: 100px;-->
+<!--    margin: auto;-->
+<!--    padding-right: 20px;-->
+<!--    margin-left: 0;-->
+<!--  }-->
+
+<!--  .main-nav {-->
+<!--    display: grid;-->
+<!--    grid-gap: 0px;-->
+<!--    grid-template-columns: repeat(1, 1fr);-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  h1 {-->
+<!--    text-align: center;-->
+<!--    font-size: 18px;-->
+<!--  }-->
+
+
+
+<!--  .box {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(1, 1fr);-->
+<!--    text-align: center;-->
+<!--  }-->
+
+<!--  .box a:hover {-->
+<!--    transition: transform .3s;-->
+<!--    -ms-transform: scale(1);-->
+<!--    -webkit-transform: scale(1);-->
+<!--    transform: scale(1.2);-->
+<!--  }-->
+
+<!--  .logos {-->
+<!--    width: 20px;-->
+<!--    height: 100px;-->
+<!--    /* display: grid;-->
+<!--    grid-gap: 10px;-->
+<!--    grid-template-columns: repeat(2, 1fr);-->
+<!--    text-align: center;-->
+<!--    margin-top: 0; */-->
+<!--  }-->
+
+<!--  .sub-links ul {-->
+<!--    display: grid;-->
+<!--    grid-gap: 20px;-->
+<!--    grid-template-columns: repeat(1, 1fr);-->
+<!--    text-align: center;-->
+<!--    font-size: 15px;-->
+<!--  }-->
+
+
+
+
+
+<!--}-->
+
+<!--</style>-->
+
+<!--<body>-->
+<!--    <header>-->
+
+<!--      <div class="main-nav">-->
+<!--        <div class="Watchlogo">-->
+<!--          <b><a id="logo" href="#" style="color: blueviolet;"><strong>Watch If</strong></a></b>-->
+<!--          <img class = "logo" src="https://cdn-icons-png.flaticon.com/128/9350/9350100.png?ga=GA1.1.1100674163.1692698765&track=ais" style="width: 50px; height: 45px;">-->
+
+
+<!--        </div>-->
+<!--      </div>-->
+
+<!--        {% if not user.is_authenticated %}-->
+
+<!--        <nav class="sub-nav">-->
+<!--          <a href="{% url 'home_path' %}">Home</a>-->
+<!--          <a href="{% url 'register_subscriber' %}">Sign up</a>-->
+<!--          <a href="{% url 'login' %}">login</a>-->
+
+<!--        {% endif %}-->
+
+<!--        {% if request.user.is_authenticated %}-->
+<!--            <a href="{% url 'home_path' %}">Home</a>-->
+<!--            <a href="">welcome {{ request.user.username}}</a>&nbsp;-->
+<!--            <form class="search-form">-->
+<!--                <input name="searchpost" class="form-control" type="search" placeholder="Search" aria-label="Search">-->
+<!--                <button class="btn btn-success" type="submit">Search</button>-->
+<!--            </form>-->
+
+<!--            {% if user.groups.all.0.name == 'admin' %}-->
+
+<!--            <a href="{% url 'admin' %}">Admin Management</a>&nbsp;-->
+<!--            <a href="{% url 'logout' %}">logout</a>&nbsp;-->
+<!--            {% endif %}-->
+
+<!--           {% if user.groups.all.0.name == 'creator' %}-->
+<!--          <a href="{% url 'add_content' %}">Add Movies</a>&nbsp;-->
+<!--          <a href="{% url 'add_series' %}">Add TV Shows</a>&nbsp;-->
+<!--          <a href="{% url 'add_content_kids' %}">Add Kids</a>&nbsp;-->
+<!--          <a href="{% url 'password_change' %}">change password</a>&nbsp-->
+<!--          <a href="{% url 'logout' %}">logout</a>&nbsp;-->
+<!--            <div class="sidehoverbar">-->
+
+<!--        <div id="mySidenav" class="sidenav">-->
+<!--            <a href="{% url 'movies' %}" id="about"><i class="fa fa-fw fa-wrench"></i>Movies</a>-->
+<!--            <a href="{% url 'tv_shows' %}" id="space"><i class="fa fa-fw fa-user"></i>Tv Shows </a>-->
+<!--            <a href="{% url 'kids_content' %}" id="find"><i class="fa fa-fw fa-search"></i>Kids</a>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--          {% endif %}-->
+
+<!--          {% if user.groups.all.0.name == 'subscriber' %}-->
+<!--           <a href="{% url 'home_path' %}">Home</a>-->
+<!--          <a href="{% url 'movies' %}">Movies</a>&nbsp;-->
+<!--          <a href="{% url 'tv_shows' %}">TV Shows</a>&nbsp;-->
+<!--          <a href="{% url 'kids_content' %}">Kids</a>&nbsp;-->
+<!--          <a href="{% url 'password_change' %}">change password</a>&nbsp-->
+<!--            <a href="{% url 'logout' %}">logout</a>&nbsp;-->
+
+
+<!--        {% endif %}-->
+
+<!--          {% endif %}-->
+
+
+
+<!--      </nav>-->
+
+<!--    </header><br><br><br>-->
+<!--</body>-->
+<!--</html>-->
+
